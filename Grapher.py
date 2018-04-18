@@ -19,7 +19,8 @@ class Grapher:
     def hideGrid(self):
         self.gridShown = False
 
-    def surfaceToGraph(self, (x,y)):
+    def surfaceToGraph(self, pos):
+        x,y = pos
         gWidth = float(self.width)/self.gridWidth
         gHeight = float(self.height)/self.gridHeight
         return (x*gWidth,y*gHeight)
@@ -57,9 +58,9 @@ class Grapher:
     def renderGrid(self):
         gWidth=float(self.width)/self.gridWidth
         gHeight=float(self.height)/self.gridHeight
-        for x in xrange(1,self.gridWidth):
+        for x in range(1,self.gridWidth):
             pygame.draw.line(self.surface, BLACK, (x*gWidth, 0),(x*gWidth, self.height))
-        for y in xrange(1, self.gridHeight):
+        for y in range(1, self.gridHeight):
             pygame.draw.line(self.surface, BLACK, (0, y*gHeight),(self.width, y*gHeight))
 
     def render(self):
@@ -74,3 +75,6 @@ class Grapher:
     def clear(self):
         self.points = []
         self.lines = []
+        
+    def save(self, fileName):
+        pygame.image.save(self.surface, fileName)
