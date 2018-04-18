@@ -200,7 +200,7 @@ def handle_events():
             return False
         elif(e.type == pygame.KEYDOWN):
             if(e.key == pygame.K_ESCAPE):
-                grapher.save("screenshot.png")
+                #grapher.save("screenshot.png")
                 return False
     return True
 
