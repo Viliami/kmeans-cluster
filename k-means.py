@@ -1,7 +1,7 @@
 import pygame, math, random, os, copy
 from Grapher import Grapher
 
-os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (10,10)
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (30,30)
 
 
 random.seed()
@@ -20,7 +20,7 @@ grapher.showGrid()
 
 def euclid_distance(point1, point2, dimensions=2):
     sum = 0
-    for i in xrange(dimensions):
+    for i in range(dimensions):
         sum += (point1[i]-point2[i])**2
     return math.sqrt(sum)
 
@@ -30,10 +30,12 @@ def random_color():
     b = random.randint(0,255)
     return (r,g,b)
 
-def darker_color((r,g,b), percent=0.7):
+def darker_color(color, percent=0.7):
+    r,g,b = color
     return r*percent, g*percent, b*percent
 
-def transparent_color((r,g,b), a):
+def transparent_color(color, a):
+    r,g,b = color
     return (r,g,b,a)
 
 class Cluster:
@@ -92,7 +94,7 @@ class Cluster:
 
 class Dataset:
     def __init__(self, subjects):
-        self.data = [[0,0,(0,0,0)] for x in xrange(0,subjects)]
+        self.data = [[0,0,(0,0,0)] for x in range(0,subjects)]
         self.clusters = []
 
     def setSubject(self, index, value):
@@ -109,14 +111,14 @@ class Dataset:
         chosen_one = self.data[0]
         max_distance = -1
         max_point = None
-        for i in xrange(1,len(self.data)):#get furthest point from the chosen one
+        for i in range(1,len(self.data)):#get furthest point from the chosen one
             point = self.data[i]
             distance = euclid_distance(chosen_one, point)
             if(distance > max_distance):
                 max_distance = distance
                 max_point = point
         max_distance = -1
-        for i in xrange(len(self.data)): #get furthest point from max_point
+        for i in range(len(self.data)): #get furthest point from max_point
             point = self.data[i]
             distance = euclid_distance(max_point, point)
             if(distance > max_distance):
@@ -178,7 +180,7 @@ data.setSubject(6, [3.5,4.0,BLACK])
 DATA_SIZE = 200
 data = Dataset(DATA_SIZE)
 
-for i in xrange(DATA_SIZE):
+for i in range(DATA_SIZE):
     data.setSubject(i, [random.uniform(0,10), random.uniform(0,10), BLACK])
 
 # data.setSubject(7, (9.0,4.0,BLACK))
@@ -198,6 +200,7 @@ def handle_events():
             return False
         elif(e.type == pygame.KEYDOWN):
             if(e.key == pygame.K_ESCAPE):
+                grapher.save("screenshot.png")
                 return False
     return True
 
